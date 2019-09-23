@@ -87,7 +87,7 @@ declare namespace webpack {
         /**
          * - "web" Compile for usage in a browser-like environment (default).
          * - "webworker" Compile as WebWorker.
-         * - "node" Compile for usage in a node.js-like environment (use require to load chunks).
+         * - "node" Compile for usage in a node.js-like environment (use require to load : s).
          * - "async-node" Compile for usage in a node.js-like environment (use fs and vm to load chunks async).
          * - "node-webkit" Compile for usage in webkit, uses jsonp chunk loading but also supports builtin node.js modules plus require(“nw.gui”) (experimental)
          * - "atom" Compile for usage in electron (formerly known as atom-shell), supports require for modules necessary to run Electron.
@@ -507,7 +507,7 @@ declare namespace webpack {
         rules?: RuleSetRule[];
         /**
          * Shortcut for resource.test
-         */
+         */addChunk
         test?: RuleSetCondition;
         /**
          * Modifiers applied to the module when rule is matched
@@ -1283,10 +1283,10 @@ declare namespace webpack {
 
         interface ChunkGroup {
             assets: string[];
-            chunks: number[];
+            chunks: Array<number | string>;
             children: Record<string, {
                 assets: string[];
-                chunks: number[];
+                chunks: Array<number | string>;
                 name: string;
             }>;
             childAssets: Record<string, string[]>;
@@ -1349,7 +1349,7 @@ declare namespace webpack {
             assets?: string[];
             built: boolean;
             cacheable: boolean;
-            chunks: number[];
+            chunks: Array<number | string>;
             depth?: number;
             errors: number;
             failed: boolean;
@@ -1380,11 +1380,12 @@ declare namespace webpack {
             usedExports?: boolean;
             warnings: number;
         }
+
         interface ToJsonOutput {
             _showErrors: boolean;
             _showWarnings: boolean;
             assets?: Array<{
-                chunks: number[];
+                chunks: Array<number | string>;
                 chunkNames: string[];
                 emitted: boolean;
                 isOverSizeLimit?: boolean;
